@@ -4,6 +4,9 @@ import pygame
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 900
 
+spacebg_img = pygame.image.load('pictures/spacebg.jpg')
+spacebg_img = pygame.transform.scale(spacebg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
+
 # color
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -35,12 +38,11 @@ class Game:
                 self.running = False
 
     def update(self):
-        self.screen.fill(RED)
-        pygame.display.flip()
+        pass
 
     def draw(self):
-        self.screen.fill(BLACK) # fill screen with black
-        pygame.display.flip() # update a portion of the screen
+        self.screen.blit(spacebg_img, (0, 0))
+        pygame.display.flip()
 
     def quit(self):
         pygame.quit()
