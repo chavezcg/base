@@ -43,7 +43,7 @@ class Game:
 
         #create player
         self.player_group = pygame.sprite.Group()
-        self.player = ps.Player(0, 0, 79, 113, self.screen, self.player_base_image)
+        self.player = ps.Player(50, 0, 79, 113, self.screen, self.player_base_image)
         #self.player = ps.Player(0, 0, 105, 109, self.screen, self.player1_img)
         #create a group for the player
 
@@ -66,7 +66,7 @@ class Game:
     # Updates the game state such as player position and enemy position
     # This is where the game logic goes
     def update(self):
-        pass
+       self.player_group.update()
 
     def draw(self):
         # set background to background image and draw it
