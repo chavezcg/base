@@ -38,12 +38,26 @@ class Game:
         player_spritesheet = spritesheet.SpriteSheet('pictures/Morty.jpg')
         # morty
         self.player_base_image = player_spritesheet.image_at((27, 703, 79, 113))
+        self.left_facing_image1 = player_spritesheet.image_at((395, 876, 95, 109))
+        self.left_facing_image2 = player_spritesheet.image_at((284, 856, 77, 108))
+        self.left_facing_image3 = player_spritesheet.image_at((155, 856, 77, 109))
+        self.left_facing_image4 = player_spritesheet.image_at((27, 855, 77, 110))
         self.player_base_image.convert_alpha()
+
+        self.leftFacingList = [self.left_facing_image1, self.left_facing_image2, self.left_facing_image3, self.left_facing_image4]
+
+        self.up_facing_image1 = player_spritesheet.image_at((416, 1019, 78, 111))
+        self.up_facing_image2 = player_spritesheet.image_at((287, 1021, 78, 109))
+        self.up_facing_image3 = player_spritesheet.image_at((158, 1019, 78, 114))
+        self.up_facing_image4 = player_spritesheet.image_at((29, 1021, 78, 109))
+
+        self.upFacingList = [self.up_facing_image1, self.up_facing_image2,self.up_facing_image3, self.up_facing_image4]
+
 
 
         #create player
         self.player_group = pygame.sprite.Group()
-        self.player = ps.Player(50, 0, 79, 113, self.screen, self.player_base_image)
+        self.player = ps.Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 79, 113, self.screen, self.player_base_image, self.leftFacingList, self.upFacingList)
         #self.player = ps.Player(0, 0, 105, 109, self.screen, self.player1_img)
         #create a group for the player
 
