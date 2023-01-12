@@ -46,6 +46,14 @@ class Game:
 
         self.leftFacingList = [self.left_facing_image1, self.left_facing_image2, self.left_facing_image3, self.left_facing_image4]
 
+        self.up_images = []
+        self.player_right_image1 = player_spritesheet.image_at((28, 1042, 78, 109))
+        self.player_right_image2 = player_spritesheet.image_at((157, 1042, 78, 108))
+        self.player_right_image3 = player_spritesheet.image_at((286, 1042, 78, 109))
+        self.player_right_image4 = player_spritesheet.image_at((415, 1042, 78, 109))
+        self.up_images = [self.player_right_image1, self.player_right_image2, self.player_right_image3,
+                          self.player_right_image4, self.up_images]
+
         self.up_facing_image1 = player_spritesheet.image_at((416, 1019, 78, 111))
         self.up_facing_image2 = player_spritesheet.image_at((287, 1021, 78, 109))
         self.up_facing_image3 = player_spritesheet.image_at((158, 1019, 78, 114))
