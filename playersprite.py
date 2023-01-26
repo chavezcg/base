@@ -47,7 +47,11 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_RIGHT]:
             self.rect.x = self.rect.x + self.speed
             flipped_images = self.flip_images(self.left_image)
-            self.image = flipped_images[0]
+            self.image_index = self.image_index + 1
+            if self.image_index > 3:
+                self.image_index = 0
+
+            self.image = flipped_images[self.image_index]
 
         if keys[pygame.K_DOWN]:
             self.rect.y = self.rect.y + self.speed
