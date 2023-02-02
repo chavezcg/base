@@ -11,8 +11,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.image.set_colorkey((0, 0, 0))
         self.image_index = 0
-
-
         self.rect.x = x
         self.rect.y = y
         self.speed = 5
@@ -23,6 +21,8 @@ class Player(pygame.sprite.Sprite):
         self.up_image = up_image_list
         self.left_image = left_image_list
         self.image_position = 0
+        self.jump = False #boolean to check if player is jumping
+        self.jump_level = 10
 
     def flip_images(self, image_list):
         flipped_images = []
@@ -60,6 +60,18 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_UP]:
             self.rect.y = self.rect.y - self.speed
             self.image = self.up_image[0]
+
+        if self.jump == False:
+            if keys[pygame.K_SPACE]:
+                self.jump = True
+        else:
+            if self.jump_level >= -10:
+                self.rect.y -= (self.jump_level * abs(self.jump_level)) * 0.5
+                self.jump_level -= 1
+            else:
+                self.jump = False
+                self.jump_level = 10
+
 
         if self.rect.right > self.screenwidth:
             self.rect.right = self.screenwidth
