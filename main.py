@@ -93,6 +93,7 @@ class Game:
     # This is where the game logic goes
     def update(self):
        self.player_group.update()
+       self.player.gravity()
 
     def draw(self):
         # set background to background image and draw it

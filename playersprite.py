@@ -23,6 +23,8 @@ class Player(pygame.sprite.Sprite):
         self.image_position = 0
         self.jump = False #boolean to check if player is jumping
         self.jump_level = 10
+        self.bg_music = pygame.mixer.music.load('music/bg_music.mp3')
+        pygame.mixer.music.play(-1)
 
     def flip_images(self, image_list):
         flipped_images = []
@@ -31,10 +33,15 @@ class Player(pygame.sprite.Sprite):
             flipped_images.append(flipped_image)
         return flipped_images
 
+    def gravity(self):
+        if self.rect.y < self.screenheight - self.rect.height:
+            self.rect.y += 2
+
 
     def update(self):
         self.image.set_colorkey((0, 0, 0))
         keys = pygame.key.get_pressed()
+
 
         if keys[pygame.K_LEFT]:
             print(self.image_index)
@@ -67,7 +74,7 @@ class Player(pygame.sprite.Sprite):
         else:
             if self.jump_level >= -10:
                 self.rect.y -= (self.jump_level * abs(self.jump_level)) * 0.5
-                self.jump_level -= 1
+                self.jump_level -= 2
             else:
                 self.jump = False
                 self.jump_level = 10
