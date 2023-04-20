@@ -32,9 +32,6 @@ class Game:
 
     def __init__(self):
         pygame.init()  # initialize pygame
-        self.platform_name
-        self.bg_music = pygame.mixer.music.load('music/bg_music.mp3')
-        pygame.mixer.music.play(-1)
         self.bg_img = pygame.image.load('pictures/spacebg.jpg')
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))  # create screen
         self.clock = pygame.time.Clock()  # create clock
@@ -81,7 +78,6 @@ class Game:
         self.platform6 = os.ObjectSprite(self.player_base_image, 700, SCREEN_HEIGHT - 120, "levitating platform")
         self.platform7 = os.ObjectSprite(self.player_base_image, 600, 300, "platform")
         self.platform8 = os.ObjectSprite(self.player_base_image, 500, 300, "platform")
-        self.platform8.image.fill(GREEN)
         self.platform9 = os.ObjectSprite(self.player_base_image, 400, 350, "platform")
         self.platform10 = os.ObjectSprite(self.player_base_image, 300, 400, "platform")
         self.platform11 = os.ObjectSprite(self.player_base_image, 200, 450, "platform")
@@ -89,6 +85,8 @@ class Game:
         self.platform13 = os.ObjectSprite(self.player_base_image, 0, 450, "levitating platform")
         self.platform14 = os.ObjectSprite(self.player_base_image, 100, 700, "platform")
         self.door = os.ObjectSprite(self.player_base_image, 100, 570, "door")
+        self.platforms = [self.platform, self.platform2, self.platform3, self.platform4, self.platform5, self.platform6, self.platform7,
+                          self.platform8, self.platform9, self.platform10, self.platform11, self.platform12, self.platform13, self.platform14]
 
         self.object_group.add(self.platform)
         self.object_group.add(self.platform2)
@@ -112,10 +110,17 @@ class Game:
 
         self.player_group.add(self.player)
 
-    #def platform_change(self, self.platform_name, color, new_x, new_y):
-        #self.platform_name.image.fill(color)
-        #self.platform_name.rect.x = new_x
-        #self.platform_name.rect.y = new_y
+    def platform_change(self, platform, COLOR, new_x, new_y, levitating_top, levitating_bottom):
+        platform.rect.x = new_x
+        platform.rect.y = new_y
+        platform.image.fill(COLOR)
+        if platform.name == "levitating base platform":
+            platform.levitating_top = levitating_top
+        if platform.name == "levitating base platform":
+            platform.levitating_bottom = levitating_bottom
+
+
+
 
 
     def change_level(self):
@@ -128,7 +133,9 @@ class Game:
             self.bg_img = pygame.transform.scale(self.bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
             self.bg_music = pygame.mixer.music.load("music/bg_musiclvl2.mp3")
             pygame.mixer.music.play(-1)
-            self.platform_change(self.platform, BLUE, 300, 400)
+            self.platform_change(self.platform, BLUE, 300, 400, 0, 0)
+            self.platform_change(self.platform2, BLUE, )
+
 
 
 
