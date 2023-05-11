@@ -25,7 +25,11 @@ class Player(pygame.sprite.Sprite):
         self.jump_level = 10
         self.map_level = 1
         self.changing_level = False
-
+        self.bg_music = pygame.mixer.music.load('music/bg_music.mp3')
+        pygame.mixer.music.play(-1)
+        self.max_health = 100
+        self.health = 100
+        
     def flip_images(self, image_list):
         flipped_images = []
         for image in image_list:
@@ -122,6 +126,7 @@ class Player(pygame.sprite.Sprite):
         for object in object_group:
             if self.rect.colliderect(object.rect):
                 if object.name == "platform" or object.name == "levitating platform" or object.name == "moving platform":
+                    self.health = self.health - 20
                     if self.check_above_platform(object.rect):
                         return
                     elif self.check_below_platform(object.rect):
@@ -138,6 +143,3 @@ class Player(pygame.sprite.Sprite):
                     if self.rect.x > object.rect.x and self.rect.x < object.rect.x + object.rect.width and self.rect.y > object.rect.y and self.rect.y < object.rect.y + object.rect.height:
                         self.map_level += 1
                         self.changing_level = True
-
-
-

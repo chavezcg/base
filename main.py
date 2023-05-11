@@ -20,6 +20,7 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
+CYAN = (0,255,255)
 
 
 
@@ -32,6 +33,7 @@ class Game:
 
     def __init__(self):
         pygame.init()  # initialize pygame
+        self.font_name = pygame.font.match_font('arial')
         self.bg_img = pygame.image.load('pictures/spacebg.jpg')
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))  # create screen
         self.clock = pygame.time.Clock()  # create clock
@@ -109,6 +111,8 @@ class Game:
         #create a group for the player
 
         self.player_group.add(self.player)
+        self.font_list = pygame.font.get_fonts()
+        print(self.font_list)
 
     def platform_change(self, platform, COLOR, new_x, new_y, levitating_top, levitating_bottom):
         platform.rect.x = new_x
@@ -119,22 +123,61 @@ class Game:
         if platform.name == "levitating base platform":
             platform.levitating_bottom = levitating_bottom
 
+    def draw_text(self, param, param1, WHITE, param2, param3):
+        # create a font
+        font = pygame.font.Font(self.font_name, param1)
+        text_surface = font.render(param, True, WHITE)
+        text_rect = text_surface.get_rect()
+        text_rect.midtop = (param2, param3)
+        self.screen.blit(text_surface, text_rect)
 
-
+    def health_bar(self):
+        bar_width = int((self.player.health/self.player.max_health) * 200)
+        pygame.draw.rect(self.screen, RED, [20, 20, 200, 20])
+        pygame.draw.rect(self.screen, GREEN, [20, 20, bar_width, 20])
 
 
     def change_level(self):
         print("Change Level function is being called")
         if self.player.map_level == 2:
             print("Map level = 2")
-            self.player.rect.x = 0
-            self.player.rect.y = 900
+            self.player.rect.x = 600
+            self.player.rect.y = 500
             self.bg_img = pygame.image.load('pictures/desertbg.jpeg')
             self.bg_img = pygame.transform.scale(self.bg_img, (SCREEN_WIDTH, SCREEN_HEIGHT))
             self.bg_music = pygame.mixer.music.load("music/bg_musiclvl2.mp3")
             pygame.mixer.music.play(-1)
             self.platform_change(self.platform, BLUE, 300, 400, 0, 0)
-            self.platform_change(self.platform2, BLUE, )
+            self.platform_change(self.platform2, BLUE, 400, 450, 0, 0)
+            self.platform_change(self.platform3, BLUE, 500, 550, 0, 0)
+            self.platform4.name = "levitating platform"
+            self.platform_change(self.platform4, RED, 600, 600, 300, 400)
+
+    def welcome_screen(self):
+        self.screen.fill(CYAN)
+        self.draw_text("Welcome to my game", 48, WHITE, SCREEN_WIDTH/2, SCREEN_HEIGHT/4)
+        self.draw_text("PRESS a key to play", 22, WHITE, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.screen.set_colorkey(CYAN)
+        pygame.display.flip()
+        self.wait_for_key()
+
+
+    def wait_for_key(self):
+        waiting = True
+        while waiting:
+            self.clock.tick(60)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    waiting = False
+                    self.running = False
+                if event.type == pygame.KEYUP:
+                    waiting = False
+                    # reset game
+
+                    self.player.map_level = 1
+                    self.__init__()
+                    self.change_level()
+
 
 
 
@@ -162,6 +205,8 @@ class Game:
        self.player.collisiondetection(self.object_group)
        if self.player.changing_level == True:
            self.change_level()
+           self.player.changing_level = False
+
 
 
     def draw(self):
@@ -170,16 +215,19 @@ class Game:
         self.screen.blit(self.bg_img, (0, 0))
         self.player_group.draw(self.screen) #draw player
         self.object_group.draw(self.screen) #draw object
+        self.health_bar()
         pygame.display.flip()  # update a portion of the screen
 
     def quit(self):
         pygame.quit()
 
 
+
 # main
 
 if __name__ == '__main__':
     game = Game()
+    game.welcome_screen()
     game.run()
     game.quit()
 
